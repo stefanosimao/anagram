@@ -25,6 +25,11 @@ function CheckIfAnagram(word1, word2){
         return false;
     }
 
+    // check if the words are the same, if so, they are not anagrams
+    if (word1 === word2) {
+        return false;
+    }
+
     // sort the characters in each word
     var firstWord = word1.toLowerCase().split('').sort().join('');
     var secondWord = word2.toLowerCase().split('').sort().join('');
@@ -75,4 +80,44 @@ function FindAnagrams(word, sentence){
 }
 
 
-console.log(FindAnagrams('Elvis', 'Elivs lives in a house'));
+/**
+ * Endpoint C
+ * 
+ * @param {string} sentence - A sentence
+ * @return {string[[]]} An array of arrays containing all anagram groups present in the string
+ */
+
+function FindAnagramGroups(sentence){
+    
+        // check if the input is valid, not null, and not empty
+        if(sentence === undefined || sentence === null || sentence === ''){
+            return undefined;
+        }
+    
+        // split the sentence into an array of words 
+        var sentenceArray = sentence.split(' ');
+    
+        // create an array to store the anagram groups
+        var anagramGroups = [];
+    
+        // loop through the array of words
+        for(var i = 0; i < sentenceArray.length; i++){
+    
+            // create an array to store the anagrams by calling the FindAnagrams function
+            var anagrams = FindAnagrams(sentenceArray[i], sentence);
+
+            // check if the anagram group is already in the array
+            if (anagrams instanceof Array && anagramGroups.indexOf(anagrams) === -1){
+    
+                // add the anagram group to the array
+                anagramGroups.push(anagrams);
+            }
+        }
+    
+        // return the array of anagram groups if there are any
+        return (anagramGroups.length > 0) ? anagramGroups : "No anagram groups found!";
+}
+
+
+console.log(FindAnagramGroups('Elvis lives in a house. His cat can act. He has a study that’s dusty'));
+
