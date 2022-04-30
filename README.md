@@ -1,1 +1,1 @@
-# anagram
+# API which identifies SINGLE word anagrams
