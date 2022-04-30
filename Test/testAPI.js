@@ -20,6 +20,10 @@ function CheckIfAnagram(word1, word2){
         return undefined;
     }
 
+    // remove all punctuation from the words
+    word1 = word1.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+    word2 = word2.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+
     // check if the words are the same length
     if (word1.length != word2.length) {
         return false;
@@ -37,7 +41,6 @@ function CheckIfAnagram(word1, word2){
     // compare the two words and return the result
     return firstWord === secondWord;
 }
-
 
 /**
  * Endpoint B
