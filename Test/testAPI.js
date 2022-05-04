@@ -77,7 +77,7 @@ function FindAnagrams(word, sentence){
     // return the array of anagrams if there are any
     return (anagrams.length > 0) ? anagrams : "No anagrams found!";
 }
-//console.log(FindAnagrams("elvis", "Elvis lives"));
+//console.log(FindAnagrams("elvis", "Elvis lives lives elvis"));
 
 
 
@@ -103,10 +103,13 @@ function FindAnagramGroups(sentence){
     
         // create an array to store the anagram groups
         var anagramGroups = [];
+
+        // remove all punctuation from the sentence and convert it to lowercase
+        sentence = sentence.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "");
     
         // loop through the array of words
         for(var i = 0; i < sentenceArray.length; i++){
-    
+
             // create an array to store the anagrams by calling the FindAnagrams function
             var anagrams = FindAnagrams(sentenceArray[i], sentence);
 
@@ -116,6 +119,12 @@ function FindAnagramGroups(sentence){
                 // add the anagram group to the array
                 anagramGroups.push(anagrams);
                 
+                // remove the anagrams from the sentence
+                for (var j = 0; j < anagrams.length; j++) {
+
+                    sentence = sentence.replace(new RegExp(anagrams[j], 'g'), ""); 
+
+                }
             }
         }
     
