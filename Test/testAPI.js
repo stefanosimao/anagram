@@ -97,15 +97,15 @@ function FindAnagramGroups(sentence){
         if(sentence === undefined || sentence === null || sentence === ''){
             return undefined;
         }
+
+        // remove all punctuation from the sentence and convert it to lowercase
+        sentence = sentence.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "");
     
         // split the sentence into an array of words 
         var sentenceArray = sentence.split(' ');
     
         // create an array to store the anagram groups
         var anagramGroups = [];
-
-        // remove all punctuation from the sentence and convert it to lowercase
-        sentence = sentence.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "");
     
         // loop through the array of words
         for(var i = 0; i < sentenceArray.length; i++){
@@ -119,11 +119,11 @@ function FindAnagramGroups(sentence){
                 // add the anagram group to the array
                 anagramGroups.push(anagrams);
                 
-                // remove the anagrams from the sentence
+                // remove the anagrams from the sentence and from the array to prevent looping through words that are not in the sentence anymore
                 for (var j = 0; j < anagrams.length; j++) {
 
                     sentence = sentence.replace(new RegExp(anagrams[j], 'g'), ""); 
-
+                    sentenceArray = sentenceArray.filter((w) => w !== anagrams[j]);
                 }
             }
         }
