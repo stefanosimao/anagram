@@ -21,8 +21,8 @@ function CheckIfAnagram(word1, word2){
     }
 
     // remove all punctuation from the words
-    word1 = word1.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-    word2 = word2.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+    word1 = word1.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "")
+    word2 = word2.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "")
 
     // check if the words are the same length
     if (word1.length != word2.length) {
@@ -69,7 +69,7 @@ function FindAnagrams(word, sentence){
             if (CheckIfAnagram(word, sentenceArray[i])) {
 
                 // add the anagram to the array and remove all punctuation from the word
-                anagrams.push(sentenceArray[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""));
+                anagrams.push(sentenceArray[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "").toLowerCase());
             }
         }
     }
@@ -77,7 +77,7 @@ function FindAnagrams(word, sentence){
     // return the array of anagrams if there are any
     return (anagrams.length > 0) ? anagrams : "No anagrams found!";
 }
-// console.log(FindAnagrams("elvis", "elvis lives"));
+//console.log(FindAnagrams("elvis", "Elvis lives"));
 
 
 
@@ -115,13 +115,12 @@ function FindAnagramGroups(sentence){
                 
                 // add the anagram group to the array
                 anagramGroups.push(anagrams);
-                sentenceArray.splice(sentenceArray.indexOf(sentenceArray[i]),1);
-                console.log(sentenceArray);
+                
             }
         }
     
         // return the array of anagram groups if there are any
         return (anagramGroups.length > 0) ? anagramGroups : "No anagram groups found!";
 }
-//console.log(FindAnagramGroups('Elvis lives in a house. His cat can act. He has a study that’s dusty'));
+console.log(FindAnagramGroups('Elvis lives in a house. His cat can act. He has a study that’s dusty.'));
 
