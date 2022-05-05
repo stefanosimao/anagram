@@ -91,45 +91,91 @@ function FindAnagrams(word, sentence){
  * @return {string[[]]} An array of arrays containing all anagram groups present in the string
  */
 
-function FindAnagramGroups(sentence){
+// function FindAnagramGroups(sentence){
     
-        // check if the input is valid, not null, and not empty
-        if(sentence === undefined || sentence === null || sentence === ''){
-            return undefined;
+//         // check if the input is valid, not null, and not empty
+//         if(sentence === undefined || sentence === null || sentence === ''){
+//             return undefined;
+//         }
+
+//         // remove all punctuation from the sentence and convert it to lowercase
+//         sentence = sentence.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "");
+    
+//         // split the sentence into an array of words 
+//         var sentenceArray = sentence.split(' ');
+    
+//         // create an array to store the anagram groups
+//         var anagramGroups = [];
+    
+//         // loop through the array of words
+//         for(var i = 0; i < sentenceArray.length; i++){
+
+//             // create an array to store the anagrams by calling the FindAnagrams function
+//             var anagrams = FindAnagrams(sentenceArray[i], sentence);
+
+//             // check if the anagram array is an array and if the length is greater than 1
+//             if (anagrams instanceof Array && anagrams.length > 1) {
+                
+//                 // add the anagram group to the array
+//                 anagramGroups.push(anagrams);
+                
+//                 // remove the anagrams from the sentence and from the array to prevent looping through words that are not in the sentence anymore
+//                 for (var j = 0; j < anagrams.length; j++) {
+
+//                     sentence = sentence.replace(new RegExp(anagrams[j], 'g'), ""); 
+//                     sentenceArray = sentenceArray.filter((w) => w !== anagrams[j]);
+//                 }
+//             }
+//         }
+    
+//         // return the array of anagram groups if there are any
+//         return (anagramGroups.length > 0) ? anagramGroups : "No anagram groups found!";
+// }
+
+function FindAnagramGroups2(sentence) {
+
+    // check if the input is valid, not null, and not empty
+    if (sentence === undefined || sentence === null || sentence === '') {
+        return undefined;
+    }
+
+    // remove all punctuation from the sentence and convert it to lowercase
+    sentence = sentence.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "");
+
+    // split the sentence into an array of words 
+    var sentenceArray = sentence.split(' ');
+
+    // create an array to store the anagram groups
+    var anagramGroups = [];
+
+    const map1 = new Map();
+
+    // loop through the array of words
+    for (var i = 0; i < sentenceArray.length; i++) {
+
+        let key = sentenceArray[i].split('').sort().join('');
+
+        if (map1.has(key) && map1.get(key).indexOf(sentenceArray[i]) === -1) {
+
+            map1.get(key).push(sentenceArray[i]);
+
+        } else if(!map1.has(key)) {
+
+            map1.set(key, [sentenceArray[i]]);
+
         }
 
-        // remove all punctuation from the sentence and convert it to lowercase
-        sentence = sentence.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "");
-    
-        // split the sentence into an array of words 
-        var sentenceArray = sentence.split(' ');
-    
-        // create an array to store the anagram groups
-        var anagramGroups = [];
-    
-        // loop through the array of words
-        for(var i = 0; i < sentenceArray.length; i++){
+    }
 
-            // create an array to store the anagrams by calling the FindAnagrams function
-            var anagrams = FindAnagrams(sentenceArray[i], sentence);
+    for (var [key, value] of map1) {
 
-            // check if the anagram array is an array and if the length is greater than 1
-            if (anagrams instanceof Array && anagrams.length > 1) {
-                
-                // add the anagram group to the array
-                anagramGroups.push(anagrams);
-                
-                // remove the anagrams from the sentence and from the array to prevent looping through words that are not in the sentence anymore
-                for (var j = 0; j < anagrams.length; j++) {
-
-                    sentence = sentence.replace(new RegExp(anagrams[j], 'g'), ""); 
-                    sentenceArray = sentenceArray.filter((w) => w !== anagrams[j]);
-                }
-            }
+        if(value.length > 1){
+            anagramGroups.push(value);
         }
-    
-        // return the array of anagram groups if there are any
-        return (anagramGroups.length > 0) ? anagramGroups : "No anagram groups found!";
+    }
+
+    // return the array of anagram groups if there are any
+    return (anagramGroups.length > 0) ? anagramGroups : "No anagram groups found!";
 }
-console.log(FindAnagramGroups('Elvis lives in a house. His cat can act. He has a study that’s dusty.'));
+console.log(FindAnagramGroups2('Elvis lives in a house. His cat cat elvis tac can act. He has a study that’s dusty dusty.'));
 
