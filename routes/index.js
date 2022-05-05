@@ -69,51 +69,58 @@ function FindAnagrams(word, sentence) {
   // return the array of anagrams if there are any
   return (anagrams.length > 0) ? anagrams : "No anagrams found!";
 }
-
 /**
  * Endpoint C
  * 
  * @param {string} sentence - A sentence
  * @return {string[[]]} An array of arrays containing all anagram groups present in the string
  */
-function FindAnagramGroups(sentence) {
+function FindAnagramGroups(sentence){
+    
+        // check if the input is valid, not null, and not empty
+        if(sentence === undefined || sentence === null || sentence === ''){
+            return undefined;
+        }
 
-  // check if the input is valid, not null, and not empty
-  if (sentence === undefined || sentence === null || sentence === '') {
-    return undefined;
-  }
+        // remove all punctuation from the sentence and convert it to lowercase
+        sentence = sentence.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "");
+    
+        // split the sentence into an array of words 
+        var sentenceArray = sentence.split(' ');
+    
+        // create an array to store the anagram groups
+        var anagramGroups = [];
 
-  // split the sentence into an array of words 
-  var sentenceArray = sentence.split(' ');
+        // loop through the array of words
+        for(var i = 0; i < sentenceArray.length; i++){
 
-  // create an array to store the anagram groups
-  var anagramGroups = [];
+            // create an array to store the anagrams by calling the FindAnagrams function
+            var anagrams = FindAnagrams(sentenceArray[i], sentence);
 
-  // loop through the array of words
-  for (var i = 0; i < sentenceArray.length; i++) {
+            // check if the anagram array is an array and if the length is greater than 1
+            if (anagrams instanceof Array && anagrams.length > 1) {
+                
+                // add the anagram group to the array
+                anagramGroups.push(anagrams);
+                
+                // remove the anagrams from the sentence and from the array to prevent looping through words that are not in the sentence anymore
+                for (var j = 0; j < anagrams.length; j++) {
 
-    // create an array to store the anagrams by calling the FindAnagrams function
-    var anagrams = FindAnagrams(sentenceArray[i], sentence);
-
-    // check if the anagram array is an array and if the length is greater than 1
-    if (anagrams instanceof Array && anagrams.length > 1) {
-
-      // add the anagram group to the array
-      anagramGroups.push(anagrams);
-      sentenceArray.splice(sentenceArray.indexOf(sentenceArray[i]), 1);
-      console.log(sentenceArray);
-    }
-  }
-
-  // return the array of anagram groups if there are any
-  return (anagramGroups.length > 0) ? anagramGroups : "No anagram groups found!";
+                    sentence = sentence.replace(new RegExp(anagrams[j], 'g'), ""); 
+                    sentenceArray = sentenceArray.filter((w) => w !== anagrams[j]);
+                }
+            }
+        }
+    
+        // return the array of anagram groups if there are any
+        return (anagramGroups.length > 0) ? anagramGroups : "No anagram groups found!";
 }
 
 
 
 /* ------------------------------------------------- */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'ANAGRAM API' });
 });
 /* ------------------------------------------------- */
 
