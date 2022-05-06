@@ -50,7 +50,8 @@ ii. Output:  {outcome: [ [“elvis”, “lives” ], [“cat”, “act”], [�
 
 
 ## Implementation
-This API is built using the [Express](https://expressjs.com/) framework.
+This API is built using the [Express](https://expressjs.com/) framework. The APIs are defines drectly inside the routes file `routes > index.js`, as well as the handling of the HTTP requests. Inside the `views` folder, the HTML pages are defined. The `index,ejs` file also contains the javascript needed to call the API in the backend.
+The `public > style.css` file contains the CSS style for the HTML page and is served statically from the server.
 
 
 ### Endpoint C
