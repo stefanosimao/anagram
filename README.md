@@ -76,3 +76,5 @@ Open postman and in a new tab select the `POST` request.
 - Add `127.0.0.1:3000/B` to test the Endpoint B. Select `Body` and click on `x-www-form-erlencoded`, add `string1` and `string2` as keys and a corresponding word and sentence to test the API.
 - Add `127.0.0.1:3000/C` and `127.0.0.1:3000/C2` to test the Endpoint C and C2. Select `Body` and click on `x-www-form-erlencoded`, add `string1` as key and a corresponding sentence to test the API.
 
+## How to run the API on Heroku
+Just go to [this page](https://thawing-falls-74508.herokuapp.com/).
