@@ -72,7 +72,7 @@
       //convert the form action to url
       const url = new URL(endpointAction);
 
-      // fetch the outcome of the endpoint with a POST request
+      // fetch the outcome of the endpoint with a POST request after having intercepted the submit button
       fetch(`${url.pathname}`, {  
         
       method: "POST", 
