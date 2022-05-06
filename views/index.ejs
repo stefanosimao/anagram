@@ -39,52 +39,108 @@
   </body>
 
   <script>
+
+    // Function to change the action of the form when the radio button is clicked and set the required field of the second string
     function chgAction( action_name ){
+
       var formEndpoint = document.getElementById('endpoint');
       var string2Req = document.getElementById('string2');
+
       if( action_name == "A" ) {
+
           formEndpoint.action = "/A";
           string2Req.required=true;
+
       }else if( action_name == "B" ) {
+
           formEndpoint.action = "/B";
           string2Req.required=true;
+
       }else if( action_name == "C" ) {
+
           formEndpoint.action = "/C";
           string2Req.required=false;
       }
     }
 
+    // Function to send the form data and display the result after the submit button is clicked
     function submitForm(){
+
+      //get the endpoint 
       let endpointAction = document.getElementById('endpoint').action;
+
+      //convert the form action to url
       const url = new URL(endpointAction);
-      fetch(`${url.pathname}`,
-        {  method: "POST", headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            "string1": document.getElementById('endpoint').string1.value,
-            "string2": document.getElementById('endpoint').string2.value
-          })
-        }).then(res => {
-          if (res.status >= 400) { throw new Error(res.status); }
+
+      // fetch the outcome of the endpoint with a POST request
+      fetch(`${url.pathname}`, {  
+        
+      method: "POST", 
+      
+      headers: {'Content-Type': 'application/json'}, 
+      
+      body: JSON.stringify({
+
+        //extract the form data to build the body of the request
+        "string1": document.getElementById('endpoint').string1.value,
+        "string2": document.getElementById('endpoint').string2.value
+
+      })}).then(res => {
+
+          // if the response is 400 ot more, display the error message
+          if (res.status >= 400) { 
+
+            throw new Error(res.status); 
+          }
+
           return res.text();
+
         }).then(res => {
+
+          //parse the response to JSON
           let parsedRes = JSON.parse(res);
+
+          // check if the outcome field of the response is an array and if the first element of the array is also an array
           if(Array.isArray(parsedRes.outcome) && Array.isArray(parsedRes.outcome[0])){
+
+            // start to build the string to display the result
             let arrayToDisplay = '[';
-            //loop through the array
+
+            //loop through the array of the outcome field
             for(let i = 0; i < parsedRes.outcome.length; i++){
+
+              //add the anagram groups to the array to display
               arrayToDisplay = arrayToDisplay + `[${parsedRes.outcome[i]}]`
             }
+
+            //close the array to display
             arrayToDisplay = arrayToDisplay + ']'
+
+            //build the string to display the result
             var textToDisplay = `OUTCOME: ${arrayToDisplay}`;
-            document.getElementById("outcome").innerHTML = textToDisplay;
           } 
+
+          //if the first element of the array is not an array
           else if(Array.isArray(parsedRes.outcome)){
+
+            //build the string to display the result
             var textToDisplay = `OUTCOME: [${parsedRes.outcome}]`;    
+
+          //the outcome field is not an array but a message
           }else{
+
+            //build the string to display the result
             var textToDisplay = `OUTCOME: ${parsedRes.outcome}`;
           }
+
+          //display the result directly in the result div
           document.getElementById("outcome").innerHTML = textToDisplay;
-        }).catch(err => { console.error(err); });
+
+        //catch possible errors
+        }).catch(err => { 
+          
+          console.error(err); 
+        });
     }
     
   </script>

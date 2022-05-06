@@ -98,7 +98,6 @@ function FindAnagrams(word, sentence){
  * 
  * In order to find the anagrams, we use the FindAnagrams. For this reason the time complexity is O(n^2).
  * 
- * 
  */
 
 function FindAnagramGroups(sentence){
