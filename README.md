@@ -1,4 +1,4 @@
-# API which identifies SINGLE word anagrams
+# API which identifies single word anagrams
 
 ## Introduction
 I built an API which identifies single word anagrams.
@@ -50,9 +50,17 @@ ii. Output:  {outcome: [ [“elvis”, “lives” ], [“cat”, “act”], [�
 
 
 ## Implementation
-This API is built using the [Express](https://expressjs.com/) framework. The APIs are defines drectly inside the routes file `routes > index.js`, as well as the handling of the HTTP requests. Inside the `views` folder, the HTML pages are defined. The `index,ejs` file also contains the javascript needed to call the API in the backend.
+This API is built using the [Express](https://expressjs.com/) framework. The APIs are defines drectly inside the routes file `routes > index.js`, as well as the handling of the HTTP requests. Inside the `views` folder, the HTML pages are defined. The `index.ejs` file also contains the javascript needed to call the API in the backend.
 The `public > style.css` file contains the CSS style for the HTML page and is served statically from the server.
 
 
 ### Endpoint C
 Endpoint C has two implementations (endpoint C and endpoint C2). The first one is my first implementation and it uses the FindAnagrams function. The second one uses an hash table like data structure to reduce the time complexity on avarage. Further explanation is provided in the code.
+
+
+## How to run the API
+
+0. Make sure you have [nvm](https://github.com/nvm-sh/nvm) installed. This is a node version manager. 
+1. Download and install Node.js with `nvm install 16`
+2. Clone the repository and open the project
+3. Open the terminal and install yarn `yarn install`
