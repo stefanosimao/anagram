@@ -51,3 +51,7 @@ hr{
     background: rgb(0, 0, 0);
     margin:auto;
 }
+
+#outcome{
+    font-size: 1.3em;
+}

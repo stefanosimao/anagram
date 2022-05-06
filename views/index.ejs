@@ -12,9 +12,9 @@
     <div>
       <p id="welcome">Welcome to the <%= title %></p>
       <hr>
-      <form method="POST" action="/A" encType="multipart/form-data" id="endpoint">
-        <input type="text" name="string1" placeholder="First string" required size="50">
-        <input type="text" name="string2" placeholder="Second string" size="50">
+      <form method="POST" action="/A" id="endpoint" onsubmit="event.preventDefault(); submitForm();">
+        <input type="text" name="string1" placeholder="First string" required size="50" id="string1">
+        <input type="text" name="string2" placeholder="Second string" required size="50" id="string2">
         <div id="radios">
         <input type="radio" id="enda" name="endpoint" value="A" checked onclick="chgAction('A')">
         <label for="A">Endpoint A</label><br>
@@ -22,12 +22,14 @@
         <label for="B">Endpoint B</label><br>
         <input type="radio" id="endc" name="endpoint" value="C" onclick="chgAction('C')">
         <label for="C">Endpoint C</label>
+        <input type="radio" id="endc" name="endpoint" value="C" onclick="chgAction('C')">
+        <label for="C">Endpoint C2</label>
         </div>
         <input class="send" id="submit" type="submit" method="POST" value="SEND" />
     </div>
     <hr>
     <div id="result">
-      <p id="outcome">OUTCOME</p>
+      <p id="outcome"></p>
     </div>
 
 
@@ -39,13 +41,51 @@
   <script>
     function chgAction( action_name ){
       var formEndpoint = document.getElementById('endpoint');
-      if( action_name=="A" ) {
+      var string2Req = document.getElementById('string2');
+      if( action_name == "A" ) {
           formEndpoint.action = "/A";
-      }else if( action_name=="B" ) {
+          string2Req.required=true;
+      }else if( action_name == "B" ) {
           formEndpoint.action = "/B";
-      }else if( action_name=="C" ) {
+          string2Req.required=true;
+      }else if( action_name == "C" ) {
           formEndpoint.action = "/C";
+          string2Req.required=false;
       }
     }
+
+    function submitForm(){
+      let endpointAction = document.getElementById('endpoint').action;
+      const url = new URL(endpointAction);
+      fetch(`${url.pathname}`,
+        {  method: "POST", headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            "string1": document.getElementById('endpoint').string1.value,
+            "string2": document.getElementById('endpoint').string2.value
+          })
+        }).then(res => {
+          if (res.status >= 400) { throw new Error(res.status); }
+          return res.text();
+        }).then(res => {
+          let parsedRes = JSON.parse(res);
+          if(Array.isArray(parsedRes.outcome) && Array.isArray(parsedRes.outcome[0])){
+            let arrayToDisplay = '[';
+            //loop through the array
+            for(let i = 0; i < parsedRes.outcome.length; i++){
+              arrayToDisplay = arrayToDisplay + `[${parsedRes.outcome[i]}]`
+            }
+            arrayToDisplay = arrayToDisplay + ']'
+            var textToDisplay = `OUTCOME: ${arrayToDisplay}`;
+            document.getElementById("outcome").innerHTML = textToDisplay;
+          } 
+          else if(Array.isArray(parsedRes.outcome)){
+            var textToDisplay = `OUTCOME: [${parsedRes.outcome}]`;    
+          }else{
+            var textToDisplay = `OUTCOME: ${parsedRes.outcome}`;
+          }
+          document.getElementById("outcome").innerHTML = textToDisplay;
+        }).catch(err => { console.error(err); });
+    }
+    
   </script>
 </html>

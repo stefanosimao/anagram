@@ -79,9 +79,8 @@ function FindAnagramGroups(sentence){
     
         // check if the input is valid, not null, and not empty
         if(sentence === undefined || sentence === null || sentence === ''){
-            return undefined;
+          return "Invalid input!";
         }
-
         // remove all punctuation from the sentence and convert it to lowercase
         sentence = sentence.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "");
     
@@ -90,7 +89,6 @@ function FindAnagramGroups(sentence){
     
         // create an array to store the anagram groups
         var anagramGroups = [];
-
         // loop through the array of words
         for(var i = 0; i < sentenceArray.length; i++){
 
@@ -116,7 +114,51 @@ function FindAnagramGroups(sentence){
         return (anagramGroups.length > 0) ? anagramGroups : "No anagram groups found!";
 }
 
+function FindAnagramGroups2(sentence) {
 
+  // check if the input is valid, not null, and not empty
+  if (sentence === undefined || sentence === null || sentence === '') {
+    return undefined;
+  }
+
+  // remove all punctuation from the sentence and convert it to lowercase
+  sentence = sentence.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"]/g, "");
+
+  // split the sentence into an array of words 
+  var sentenceArray = sentence.split(' ');
+
+  // create an array to store the anagram groups
+  var anagramGroups = [];
+
+  const map1 = new Map();
+
+  // loop through the array of words
+  for (var i = 0; i < sentenceArray.length; i++) {
+
+    let key = sentenceArray[i].split('').sort().join('');
+
+    if (map1.has(key) && map1.get(key).indexOf(sentenceArray[i]) === -1) {
+
+      map1.get(key).push(sentenceArray[i]);
+
+    } else if (!map1.has(key)) {
+
+      map1.set(key, [sentenceArray[i]]);
+
+    }
+  }
+
+  for (var [key, value] of map1) {
+
+    if (value.length > 1) {
+      anagramGroups.push(value);
+    }
+  }
+
+  // return the array of anagram groups if there are any
+  return (anagramGroups.length > 0) ? anagramGroups : "No anagram groups found!";
+
+}
 
 /* ------------------------------------------------- */
 router.get('/', function(req, res, next) {
@@ -142,6 +184,10 @@ router.post('/:endpoint', function (req, res) {
   } else if (req.params.endpoint === 'C') {
   
     var outcome = FindAnagramGroups(string1);
+
+  } else if (req.params.endpoint === 'C2') {
+
+    var outcome = FindAnagramGroups2(string1);
 
   } else {
 
