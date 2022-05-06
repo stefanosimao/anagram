@@ -60,7 +60,19 @@ Endpoint C has two implementations (endpoint C and endpoint C2). The first one i
 
 ## How to run the API
 
-0. Make sure you have [nvm](https://github.com/nvm-sh/nvm) installed. This is a node version manager. 
+0. Make sure you have [nvm](https://github.com/nvm-sh/nvm) installed. This is a node version manager. And install [Postman](https://www.getpostman.com/).] 
 1. Download and install Node.js with `nvm install 16`
-2. Clone the repository and open the project
-3. Open the terminal and install yarn `yarn install`
+2. Install yarn with `npm install -g yarn`
+3. Clone the repository and open the project
+4. Open the terminal and install all the dependencies with `yarn install` 
+5. Start the server with `yarn start` (if you get an error, try `npm install` first). The server will be started at the address `http://localhost:3000`
+
+### Browser
+You can now visit the API at `http://localhost:3000` in the browser to test the API.
+
+### Postman
+Open postman and in a new tab select the `POST` request. 
+- Add `127.0.0.1:3000/A` to test the Endpoint A. Select `Body` and click on `x-www-form-erlencoded`, add `string1` and `string2` as keys and two corresponding testing words.
+- Add `127.0.0.1:3000/B` to test the Endpoint B. Select `Body` and click on `x-www-form-erlencoded`, add `string1` and `string2` as keys and a corresponding word and sentence to test the API.
+- Add `127.0.0.1:3000/C` and `127.0.0.1:3000/C2` to test the Endpoint C and C2. Select `Body` and click on `x-www-form-erlencoded`, add `string1` as key and a corresponding sentence to test the API.
+
