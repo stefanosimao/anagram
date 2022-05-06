@@ -58,7 +58,7 @@ The `public > style.css` file contains the CSS style for the HTML page and is se
 Endpoint C has two implementations (endpoint C and endpoint C2). The first one is my first implementation and it uses the FindAnagrams function. The second one uses an hash table like data structure to reduce the time complexity on avarage. Further explanation is provided in the code.
 
 
-## How to run the API
+## How to run the API locally
 
 0. Make sure you have [nvm](https://github.com/nvm-sh/nvm) installed. This is a node version manager. And install [Postman](https://www.getpostman.com/).] 
 1. Download and install Node.js with `nvm install 16`
